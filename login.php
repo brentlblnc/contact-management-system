@@ -23,7 +23,7 @@
                     <input type="password" name="password" id="password" class="input" placeholder="Password">
                 </div>
                 <div class="field">
-                    <button type="submit" class="button is-link">Log In</button>
+                    <button type="submit" name="loginSubmit" class="button is-link">Log In</button>
                     <a href="index.php" class="button is-danger">Cancel</a>
                 </div>
             </form>

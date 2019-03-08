@@ -1,6 +1,6 @@
 <?php
     include "LoginManager.php";
-
+    
     class LoginController {
         private $loginManager;
 
@@ -11,10 +11,14 @@
         }
 
         public function login() {
-            if ($this->loginManager->verifyLogin()) {
+            if (isset($_POST['loginSubmit']) && $this->loginManager->authenticate($_POST)) {
                 // begin session
+                session_start();
+                $_SESSION['authenticated'] = true;
                 header("Location: index.php");
-            } 
+            } else {
+                header("Location: login.php");
+            }
         }
 
 
