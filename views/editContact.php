@@ -11,8 +11,10 @@
 </head>
 <body>
     <?php
-        include "header.html";
-        session_start();
+        include "../header.php";
+        if (!isset($_SESSION['authenticated'])) {
+            header("Location: login.php");
+        }
         $temp = $_SESSION['editContact'];
     ?>
 
@@ -20,38 +22,38 @@
         <div class="block">
             <p class="content">Edit your contact's details below:</p>
             
-            <form action="EditController.php" method="POST">
+            <form action="../controllers/EditController.php" method="POST">
                 <input type="hidden" name="editSubmit" value="1">
                 <?php
                 echo <<<HERE
                     <input type="hidden" name="id" value='$temp[id]'>
                     <div class="field">
-                        <input type="text" name="firstName" class="input" value='$temp[firstName]' placeholder="First Name">
+                        <input type="text" name="firstName" class="input" value='$temp[firstName]' placeholder="First Name" required>
                     </div>
                     <div class="field">
-                        <input type="text" name="lastName" class="input" value='$temp[lastName]' placeholder="Last Name">
+                        <input type="text" name="lastName" class="input" value='$temp[lastName]' placeholder="Last Name" required>
                     </div>
                     <div class="field">
-                        <input type="text" name="address" class="input" value='$temp[address]' placeholder="Street Address">
+                        <input type="text" name="address" class="input" value='$temp[address]' placeholder="Street Address" required>
                     </div>
                     <div class="field">
-                        <input type="text" name="city" class="input" value='$temp[city]' placeholder="City">
+                        <input type="text" name="city" class="input" value='$temp[city]' placeholder="City" required>
                     </div>
                     <div class="field">
-                        <input type="tel" name="phone" class="input" value='$temp[phone]' placeholder="Phone Number">
+                        <input type="tel" name="phone" class="input" value='$temp[phone]' placeholder="Phone Number" required>
                     </div>
                     <div class="field">
-                        <input type="email" name="email" class="input" value='$temp[email]' placeholder="Email">
+                        <input type="email" name="email" class="input" value='$temp[email]' placeholder="Email" required>
                     </div>
                     <div class="field">
-                        <input type="text" name="postalCode" class="input" value='$temp[postalCode]' placeholder="Postal Code">
+                        <input type="text" name="postalCode" class="input" value='$temp[postalCode]' placeholder="Postal Code" required>
                     </div>
                     <div class="field">
-                        <input type="date" name="DOB" class="input" value='$temp[birthday]' placeholder="Date of Birth">
+                        <input type="date" name="DOB" class="input" value='$temp[birthday]' placeholder="Date of Birth" required>
                     </div>
                     <div class="field">
                         <button type="submit" class="button is-link">Submit</button>
-                        <a href="index.php" class="button is-danger">Cancel</a>
+                        <a href="../index.php" class="button is-danger">Cancel</a>
                     </div>
 HERE;
                 ?>

@@ -1,5 +1,5 @@
 <?php
-    include "EditManager.php";
+    include "../models/EditManager.php";
 
     class EditController {
         private $editManager;
@@ -19,13 +19,13 @@
             session_start();
             $_SESSION['editContact'] = $_POST;
 
-            header("Location: editContact.php");
+            header("Location: ../views/editContact.php");
         }
 
         public function editSubmit($data) {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->editManager->validate($data);
-                header("Location: index.php");
+                header("Location: ../index.php");
             }
         }
     }

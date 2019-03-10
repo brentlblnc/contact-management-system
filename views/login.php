@@ -10,21 +10,20 @@
     <title>Contact Manager: Login</title>
 </head>
 <body>
-    <?php include "header.html" ?>
+    <?php include "../header.php" ?>
 
     <div class="container">
         <div class="block">
             <p class="content">Enter your credentials below:</p>
-            <form action="LoginController.php" method="POST">
+            <form action="../controllers/LoginController.php" method="POST">
                 <div class="field">
-                    <input type="text" name="username" id="username" class="input" placeholder="Username">
+                    <input type="text" name="username" id="username" class="input" placeholder="Username" required>
                 </div>
                 <div class="field">
-                    <input type="password" name="password" id="password" class="input" placeholder="Password">
+                    <input type="password" name="password" id="password" class="input" placeholder="Password" required>
                 </div>
                 <div class="field">
                     <button type="submit" name="loginSubmit" class="button is-link">Log In</button>
-                    <a href="index.php" class="button is-danger">Cancel</a>
                 </div>
             </form>
         </div>

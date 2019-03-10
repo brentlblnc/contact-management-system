@@ -26,21 +26,6 @@
             return $this->conn;
         }
 
-        public function insert($stmt, $vars, $data, $dataTypes) {
-            // $stmt = $this->conn->prepare($stmt);
-            // $stmt->bind_param($dataTypes, ...$vars);
-            // for ($i = 0; $i < sizeof($vars); $i++) {
-            //     $vars[$i] = $data[$i];
-            // }
-            // $stmt->execute();
-            // $stmt->close();
-            
-        }
-
-        public function update($stmt) {
-
-        }
-
         public function __destruct() {
             mysqli_close($this->conn);
         }

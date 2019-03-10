@@ -1,5 +1,5 @@
 <?php
-    include "LoginManager.php";
+    include "../models/LoginManager.php";
     
     class LoginController {
         private $loginManager;
@@ -15,16 +15,11 @@
                 // begin session
                 session_start();
                 $_SESSION['authenticated'] = true;
-                header("Location: index.php");
+                header("Location: ../index.php");
             } else {
-                header("Location: login.php");
+                header("Location: ../views/login.php");
             }
         }
-
-
     }
 
     $loginController = new LoginController();
-    //$loginController->login();
-    
-?>

@@ -10,8 +10,10 @@
 </head>
 <body>
     <?php 
-        include "header.html";
-        session_start();
+        include "../header.php";
+        if (!isset($_SESSION['authenticated'])) {
+            header("Location: login.php");
+        }
         $temp = $_SESSION['contact'];
     ?>
 
@@ -20,10 +22,10 @@
             <p class="content">Are you sure you want to delete the following contact?</p>
             <p class="content"><strong><?php echo $temp['firstName'].' '.$temp['lastName']?></strong></p>
             <div class="field">
-                <form action="DeleteController.php" method="POST">
+                <form action="../controllers/DeleteController.php" method="POST">
                     <input type="hidden" name="deleteSubmit" value="1">
                     <button type="submit" class="button is-danger">Delete</button>
-                    <a href="index.php" class="button is-link">Cancel</a>
+                    <a href="../index.php" class="button is-link">Cancel</a>
                 </form>
             </div>
         </div>

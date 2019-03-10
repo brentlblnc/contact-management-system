@@ -1,8 +1,3 @@
-<?php 
-    
-
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -15,7 +10,12 @@
     <title>Contact Manager: Home</title>
 </head>
 <body class="has-background-light">
-    <?php include "header.html" ?>
+    <?php 
+        include "header.php";
+        if (!isset($_SESSION['authenticated'])) {
+            header("Location: views/login.php");
+        }
+    ?>
 
     <div class="container">
         <div class="block">
@@ -24,7 +24,7 @@
 
         <div class="block">
             <p class="content">
-                <a href="addContact.php" class="button is-success">Add Contact&nbsp;<i class="fas fa-plus"></i></a>
+                <a href="views/addContact.php" class="button is-success">Add Contact&nbsp;<i class="fas fa-plus"></i></a>
             </p>
         </div>
 
@@ -44,13 +44,15 @@
                     </tr>
                 </thead>
                 <?php
-                    include "DbConnect.php";
+                    include "models/DbConnect.php";
 
                     $db = new DbConnect("localhost", "root", "", "cms");
                 
                     $results = $db->select("SELECT * FROM contacts");
                     if (mysqli_num_rows($results) > 0) {
                         while ($row = mysqli_fetch_assoc($results)) {
+                            $birthdayArr = explode('-', $row["birthday"]);
+                            $birthMonth = $birthdayArr[1];
                             echo "<tr>";
                             echo "<td>".$row["firstName"]."</td>";
                             echo "<td>".$row["lastName"]."</td>";
@@ -59,10 +61,11 @@
                             echo "<td>".$row["phoneNumber"]."</td>";
                             echo "<td>".$row["email"]."</td>";
                             echo "<td>".$row["postalCode"]."</td>";
-                            echo "<td>".$row["birthday"]."</td>";
+                            echo "<td>".$row["birthday"];
+                            echo date('m') == $birthMonth ? ' <i class="fas fa-birthday-cake"></i></td>' : '</td>';
                             echo <<<HERE
                                 <td>
-                                    <form action='EditController.php' method='POST'>
+                                    <form action='controllers/EditController.php' method='POST'>
                                         <input type='hidden' name='edit' value='1'>
                                         <input type='hidden' name='id' value='$row[id]'>
                                         <input type='hidden' name='firstName' value='$row[firstName]'>
@@ -75,13 +78,14 @@
                                         <input type='hidden' name='birthday' value='$row[birthday]'>
                                         <button type='submit' class='button is-warning'><i class='fas fa-edit'></i></button>
                                     </form>
-                                    <form action='DeleteController.php' method='POST'>
+                                    <form action='controllers/DeleteController.php' method='POST'>
                                         <input type='hidden' name='delete' value='1'>
                                         <input type='hidden' name='id' value='$row[id]'>
                                         <input type='hidden' name='firstName' value='$row[firstName]'>
                                         <input type='hidden' name='lastName' value='$row[lastName]'>
                                         <button type='submit' class='button is-danger'><i class='fas fa-trash-alt'></i></button>
                                     </form>
+                                    <a href='mailto:$row[email]' class='button is-link'><i class='fas fa-envelope'></i></a>
                                 </td>
 HERE;
                             echo "</tr>";
@@ -90,97 +94,7 @@ HERE;
                 ?>
             </table>
         </div>
-
-
-
-
-
     </div>
-    
-
-        <!-- <div class="block">
-            <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, in.</p>
-            <p class="content">Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, in.</p>
-        </div>
-
-        <div class="block">
-            <button class="button">Button</button>
-            <button class="button is-white">Button</button>
-            <button class="button is-light">Button</button>
-            <button class="button is-dark">Button</button>
-            <button class="button is-black">Button</button>
-            <button class="button is-link">Button</button>
-        </div>
-
-        <div class="block">
-            <a href="" class="button is-primary is-outlined">Primary</a>
-            <a href="" class="button is-info is-outlined">Primary</a>
-            <a href="" class="button is-success is-outlined">Primary</a>
-            <a href="" class="button is-warning is-outlined">Primary</a>
-            <a href="" class="button is-danger is-outlined">Primary</a>
-        </div>
-
-        <div class="block">
-            <a href="" class="button is-hovered">Hovered</a>
-            <a href="" class="button is-focused">Hovered</a>
-            <a href="" class="button is-active">Hovered</a>
-            <a href="" class="button is-loading">Hovered</a>
-            <a href="" class="button" disabled>Disabled</a>
-        </div>
-
-        <div class="block">
-            <div class="box">
-                <h1 class="title">Hello world!</h1>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Facere, hic.</p>
-            </div>
-        </div>
-
-        <div class="block">
-            <div class="notification">
-                <button class="delete"></button>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dicta!
-            </div>
-            <div class="notification is-primary">
-                <button class="delete"></button>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dicta!
-            </div>
-            <div class="notification is-info">
-                <button class="delete"></button>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dicta!
-            </div>
-            <div class="notification is-success">
-                <button class="delete"></button>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptate, dicta!
-            </div>
-        </div>
-
-        <div class="block">
-            <span class="tag">Hello</span>
-        </div>
-
-        <div class="block">
-            <form action="">
-                <div class="field">
-                    <label class="label">Name</label>
-                    <input type="text" class="input is-success" placeholder="Enter Name">
-                </div>
-                <div class="field">
-                    <label class="label">Name</label>
-                    <input type="text" class="input is-danger" placeholder="Enter Name">
-                </div>
-            </form>
-
-            <div class="block">
-                <div class="field has-addons">
-                    <p class="control">
-                        <input type="text" class="input" placeholder="Enter keywords...">
-                    </p>
-                    <p class="control">
-                        <a href="" class="button is-info">Search</a>
-                    </p>
-                </div>
-            </div>
-        </div> -->
     
 </body>
 </html>

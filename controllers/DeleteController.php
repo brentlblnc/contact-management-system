@@ -1,5 +1,5 @@
 <?php
-    include "DeleteManager.php";
+    include "../models/DeleteManager.php";
 
     class DeleteController {
         private $deleteManager;
@@ -18,13 +18,13 @@
         public function delete() {
             session_start();
             $_SESSION['contact'] = $_POST;
-            header("Location: deleteContact.php");
+            header("Location: ../views/deleteContact.php");
         }
 
         public function deleteSubmit() {
             if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $this->deleteManager->delete($_SESSION['contact']);
-                header("Location: index.php");
+                header("Location: ../index.php");
             }
         }
 

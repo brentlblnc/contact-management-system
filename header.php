@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <section class="hero is-info is-bold content">
     <div class="hero-body">
         <div class="container">
@@ -13,7 +16,7 @@
                 <div class="navbar-end">
                     <div class="navbar-item">
                         <div class="block">
-                            <a href="login.php" class="button is-link">Login&nbsp;<i class="fas fa-key"></i></a>
+                            <a href="<?php echo isset($_SESSION['authenticated']) ? 'logout.php' : 'views/login.php'?>" class="button is-link"><?php echo isset($_SESSION['authenticated']) ? 'Logout' : 'Login'?>&nbsp;<i class="fas fa-key"></i></a>
                         </div>
                     </div>
                 </div>

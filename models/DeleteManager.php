@@ -1,13 +1,15 @@
 <?php
     include "DbConnect.php";
+    
 
     class DeleteManager {
         private $db;
         private $stmt;
 
         public function __construct() {
+            include "../db.config.php";
             session_start();
-            $this->db = new DbConnect("localhost", "root", "", "cms");
+            $this->db = new DbConnect($config['server'], $config['user'], $config['password'], $config['database']);
         }
 
         public function delete($contact) {
